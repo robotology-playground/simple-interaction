@@ -1,0 +1,66 @@
+<application>
+    <name>SimpleInteraction</name>
+    <description>A simple interaction using port arbitration</description>
+    <version>1.0</version>
+    <authors>
+        <author email="ali.paikan@iit.it">Ali Paikan</author>
+    </authors>
+
+    <module>
+        <name>simpleFaceDetector</name>
+        <parameters>--expression ang</parameters>
+        <node>icub20</node>
+        <prefix></prefix>
+    </module>
+
+    <module>
+        <name>wonderAround</name>
+        <parameters>--expression shy</parameters>
+        <node>icub20</node>
+        <prefix></prefix>
+    </module>
+
+    <module>
+        <name>yarpview</name>
+        <parameters>--y 100</parameters>
+        <node>icub20</node>
+        <prefix>/face</prefix>
+    </module>
+  
+    <connection>
+        <from external="true">/icub/camcalib/left/out</from>
+        <to>/simpleFaceDetector/image:i</to>
+        <protocol>udp</protocol>
+    </connection>
+
+    <connection>
+        <from>/simpleFaceDetector/image:o</from>
+        <to>/face/yarpview/img:i</to>
+        <protocol>udp</protocol>
+    </connection>
+
+    <connection>
+        <from>/simpleFaceDetector/face:o</from>
+        <to external="true">/icub/face/emotions/in</to>
+        <protocol>tcp+recv.portmonitor+context.simpleInteraction+file.face_pm</protocol>
+    </connection>
+
+    <connection>
+        <from>/wonderAround/face:o</from>
+        <to external="true">/icub/face/emotions/in</to>
+        <protocol>tcp+recv.portmonitor+context.simpleInteraction+file.wonder_pm</protocol>
+    </connection>
+
+    <connection>
+        <from>/wonderAround/gazeXd:o</from>
+        <to external="true">/iKinGazeCtrl/xd:i</to>
+        <protocol>tcp+recv.portmonitor+context.simpleInteraction+file.wonder_pm</protocol>
+    </connection>
+
+    <connection>
+        <from>/simpleFaceDetector/gazeXd:o</from>
+        <to external="true">/iKinGazeCtrl/xd:i</to>
+        <protocol>tcp+recv.portmonitor+context.simpleInteraction+file.face_pm</protocol>
+    </connection>
+
+</application>
