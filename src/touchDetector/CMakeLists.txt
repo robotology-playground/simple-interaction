@@ -22,9 +22,12 @@ set(sources src/main.cpp
             src/touchDetector.cpp)
 source_group("Source Files" FILES ${sources})
 
-include_directories(${YARP_INCLUDE_DIRS})
+include_directories(${YARP_INCLUDE_DIRS} ${iKin_INCLUDE_DIRS} ${skinDynLib_INCLUDE_DIRS})
+
+message("XXXXXXX" ${skinDynLib_INCLUDE_DIRS})
+
 add_executable(${PROJECTNAME} ${sources})
-target_link_libraries(${PROJECTNAME} ${YARP_LIBRARIES})
+target_link_libraries(${PROJECTNAME} ${YARP_LIBRARIES} iKin skinDynLib)
 install(TARGETS ${PROJECTNAME} DESTINATION bin)
 
 if(NOT BUILD_BUNDLE)
@@ -37,6 +40,4 @@ file(GLOB scripts ${CMAKE_CURRENT_SOURCE_DIR}/app/scripts/*.template)
 
 yarp_install(FILES ${conf}    DESTINATION ${ICUBCONTRIB_CONTEXTS_INSTALL_DIR}/${PROJECTNAME})
 yarp_install(FILES ${scripts} DESTINATION ${ICUBCONTRIB_APPLICATIONS_TEMPLATES_INSTALL_DIR})
-
-
 

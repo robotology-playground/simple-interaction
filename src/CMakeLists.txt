@@ -6,5 +6,5 @@ cmake_minimum_required(VERSION 2.8)
 
 add_subdirectory(wonderAround)
 add_subdirectory(simpleFaceDetector)
-#add_subdirectory(touchDetector)
+add_subdirectory(touchDetector)
 
